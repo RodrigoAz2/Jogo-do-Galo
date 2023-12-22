@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>   
+    <HEAD>
+        <meta charset="utf-8"/>
+        <title> A minha primeira página </title>
+        <meta charset="utf-8"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&family=RocknRoll+One&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" type="text/css" href="css/style.css"> 
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    </HEAD>
+
+    <BODY>
+
+        <div id="msgUser" style="line-height:2; text-align:center; font-size : 30px; display:none;">
+        </div>
+
+        <div class="caixaMae">
+            <DIV CLASS="caixa n1">1</DIV>
+            <DIV CLASS="caixa n2">2</DIV>
+            <DIV CLASS="caixa n3">3</DIV>
+            <DIV CLASS="caixa n4">4</DIV>
+            <DIV CLASS="caixa n5">5</DIV>
+            <DIV CLASS="caixa n6">6</DIV>
+            <DIV CLASS="caixa n7">7</DIV>
+            <DIV CLASS="caixa n8">8</DIV>
+            <DIV CLASS="caixa n9">9</DIV>
+        </div> 
+
+        <script>
+        var posX = "X";
+        var posO = "O";
+        var jogador = 1;
+        var jogoterminou = false;
+
+        $(".caixa").on("click", function() {
+            if (!jogoterminou) {
+                jogar($(this));
+            }
+        })
+
+        function jogar(painel) {
+            var myVal = painel.html();
+            if (myVal != posX && myVal != posO) {
+                if(jogador == 1) {
+                    painel.html(posX);
+                    jogador = 2;
+                } else if (jogador == 2) {
+                    painel.html(posO);
+                    jogador = 1;
+                }
+                // verificar se ganhou após jogar !!!
+                verificaFinalJogo();
+            } else {
+                alert("Posição já escolhida !!!!");
+            }
+            return true;
+        }
+
+        function verificaFinalJogo() {
+
+            var nx1 = $(".n1").html();
+            var nx2 = $(".n2").html();
+            var nx3 = $(".n3").html();
+            var nx4 = $(".n4").html();
+            var nx5 = $(".n5").html();
+            var nx6 = $(".n6").html();
+            var nx7 = $(".n7").html();
+            var nx8 = $(".n8").html();
+            var nx9 = $(".n9").html();
+           
+            //alguem ganhou
+            if ((nx1 == nx2) && (nx2 == nx3)) {
+                alguemGanhou();
+            }else if ((nx4 == nx5) && (nx5 == nx6)) {
+                alguemGanhou();
+            }else if ((nx7 == nx8) && (nx8 == nx9)) {
+                alguemGanhou();
+            }else if ((nx1 == nx5) && (nx5 == nx9)) {
+                alguemGanhou();
+            }else if ((nx3 == nx5) && (nx5 == nx7)) {
+                alguemGanhou();
+            }else if ((nx1 == nx4) && (nx4 == nx7)) {
+                alguemGanhou();
+            }else if ((nx2 == nx5) && (nx5 == nx8)) {
+                alguemGanhou();
+            }else if ((nx3 == nx6) && (nx6 == nx9)) {
+                alguemGanhou();
+        
+            } else {
+                
+                //jogo terminou !
+                var vazio = false;
+                for (i=1; i<=9; i++) {
+                    if ($(".n" + i).html() == i) {
+                        vazio = true;
+                    }
+                }
+
+                if (!vazio) {
+                    $("#msgUser").html("Empate !!!");
+                    $("#msgUser").fadeIn("slow");
+                }
+            }
+        }
+
+        function alguemGanhou() {
+                    $("#msgUser").html("Vitória !!! <br><a href='?new'>Jogar de novo</a>")
+                    $("#msgUser").fadeIn("slow");
+                    jogoterminou = true;
+                }
+
+        </script>
+    </BODY>
+</html>
